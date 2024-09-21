@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request
+from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user, current_user
 from .models import User
 from .forms import RegistrationForm, LoginForm
@@ -24,6 +24,7 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user and user.check_password(form.password.data):
             login_user(user)
+            flash('Login successful!', 'success')  # Add success message
             return redirect(url_for('user.dashboard'))
         flash('Login failed. Check your credentials.', 'danger')
     return render_template('login.html', form=form)
@@ -33,9 +34,10 @@ def login():
 def logout():
     logout_user()
     flash('You have been logged out.', 'success')
-    return redirect(url_for('user.login'))
+    return redirect(url_for('main.home'))  # Redirect to home after logout
 
 @user_bp.route('/dashboard')
 @login_required
 def dashboard():
     return render_template('dashboard.html', user=current_user)
+
