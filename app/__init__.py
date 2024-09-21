@@ -21,17 +21,18 @@ def create_app():
     migrate.init_app(app, db)
     login_manager.init_app(app)
 
-    # Register blueprints
-    from .routes import main  # Note the dot prefix to indicate local import
-    from .admin_routes import admin
-    from .user_routes import user
-
-    app.register_blueprint(main)
-    app.register_blueprint(admin)
-    app.register_blueprint(user)
-
     # Create database models
     with app.app_context():
+        # Import routes here to avoid circular import issues
+        from .routes import main
+        from .admin_routes import admin
+        from .user_routes import user
+        
+        app.register_blueprint(main)
+        app.register_blueprint(admin)
+        app.register_blueprint(user)
+
+        # Create all tables
         db.create_all()
 
     return app
