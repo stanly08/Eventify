@@ -2,8 +2,6 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
-from .routes import main
-
 
 # Initialize extensions
 db = SQLAlchemy()
@@ -12,7 +10,7 @@ login_manager = LoginManager()
 
 def create_app():
     app = Flask(__name__)
-    
+
     # Load configuration
     app.config['SECRET_KEY'] = '60ca969c3b2d0a7ec863dd5fdcd3c64e'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -24,10 +22,10 @@ def create_app():
     login_manager.init_app(app)
 
     # Register blueprints
-    from routes import main
-    from admin_routes import admin
-    from user_routes import user
-    
+    from .routes import main  # Note the dot prefix to indicate local import
+    from .admin_routes import admin
+    from .user_routes import user
+
     app.register_blueprint(main)
     app.register_blueprint(admin)
     app.register_blueprint(user)
