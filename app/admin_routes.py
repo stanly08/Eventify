@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request
-from flask_login import login_required, current_user
+from flask import Blueprint, render_template, redirect, url_for, flash
+from flask_login import login_required, current_user, logout_user
 from .models import Event
 from .forms import EventForm
 from . import db
@@ -26,7 +26,7 @@ def create_event():
         new_event = Event(
             title=form.title.data,
             description=form.description.data,
-            image=form.image.data,
+            image=form.image.data,  # Make sure this handles the file upload properly
             # Add other fields as necessary
         )
         db.session.add(new_event)
@@ -41,3 +41,4 @@ def logout():
     logout_user()
     flash('You have been logged out as admin.', 'success')
     return redirect(url_for('main.home'))
+
