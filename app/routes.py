@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 from .models import User, Event
 from . import db
+from .routes import main
+
 
 main_bp = Blueprint('main', __name__)
 
