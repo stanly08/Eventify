@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<div class="container">
+    <h2 class="my-4">Admin Dashboard</h2>
+    <p>Manage events here.</p>
+    
+    <h3 class="my-4">Add New Event</h3>
+    <form method="POST" action="{{ url_for('add_event') }}" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.name.label(class="form-label") }}
+            {{ form.name(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.date.label(class="form-label") }}
+            {{ form.date(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.location.label(class="form-label") }}
+            {{ form.location(class="form-control") }}
+        </div>
+        <div class="form-group">
+            <label for="photo">Event Photo</label>
+            <input type="file" class="form-control-file" id="photo" name="photo">
+        </div>
+        <button type="submit" class="btn btn-primary">Add Event</button>
+    </form>
+</div>
+{% endblock %}
