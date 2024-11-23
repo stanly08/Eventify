@@ -1,0 +1,28 @@
+# Ignore Python bytecode
+*.pyc
+__pycache__/
+
+# Ignore environment variables and settings
+.env
+
+# Ignore SQLite database file
+events.db
+
+# Ignore Flask instance folder
+instance/
+
+# Ignore virtual environment directory
+venv/
+
+# Ignore log files
+*.log
+
+# Ignore system-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore static files generated during runtime (if any)
+app/static/uploads/
+
+# Ignore compiled Python files
+*.pyo
