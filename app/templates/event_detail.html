@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Event Detail{% endblock %}
+{% block content %}
+<div class="container">
+    <h2 class="my-4">{{ event.name }}</h2>
+    <p>Date: {{ event.date }}</p>
+    <p>Location: {{ event.location }}</p>
+    <img src="{{ url_for('static', filename='uploads/' + event.photo) }}" class="event-photo" alt="Event Photo">
+    <p>{{ event.description }}</p>
+    {% if user.is_authenticated %}
+    <form method="POST" action="{{ url_for('register_event', event_id=event.id) }}">
+        {{ form.hidden_tag() }}
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+    {% else %}
+    <p>Please <a href="{{ url_for('login') }}">login</a> to register for this event.</p>
+    {% endif %}
+</div>
+{% endblock %}
