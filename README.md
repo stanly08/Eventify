@@ -1,5 +1,6 @@
 **Eventify**
 Eventify is a web application built using Python and Flask that allows users to manage and attend events seamlessly. It provides a platform for administrators to create and manage events, and for users to register and pay for attending events. The application integrates with the M-Pesa payment gateway for secure and convenient payments.
+
 **Features**
 1.User Authentication: Secure sign-up and login for both users and administrators.
 
