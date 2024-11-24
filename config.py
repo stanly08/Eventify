@@ -6,3 +6,4 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = 'app/static/uploads'
 
+print("Database URI from config:", os.environ.get('DATABASE_URL'))  # Debugging statement
