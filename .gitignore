@@ -12,7 +12,7 @@ events.db
 instance/
 
 # Ignore virtual environment directory
-venv/
+myenv/
 
 # Ignore log files
 *.log
