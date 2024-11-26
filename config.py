@@ -8,19 +8,5 @@ class Config:
 
     @staticmethod
     def init_app(app):
-        """Initializes the application with additional configurations."""
-        # Add any initialization here
-        print("Database URI from config:", app.config['SQLALCHEMY_DATABASE_URI'])  # Debugging statement
+        print("Database URI from config:", app.config['SQLALCHEMY_DATABASE_URI'])
 
-if __name__ == "__main__":
-    from flask import Flask
-    app = Flask(__name__)
-    app.config.from_object(Config)
-    Config.init_app(app)
-    
-    # Continue with your Flask app setup
-    # For example, initialize SQLAlchemy and other extensions here
-    from flask_sqlalchemy import SQLAlchemy
-    db = SQLAlchemy(app)
-    
-    print("App configuration:", app.config)  # Debugging statement
