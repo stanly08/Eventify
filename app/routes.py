@@ -1,20 +1,20 @@
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
-from app import db
+from app import db, login  # Import login instance
 from app.models import User, Event
 
 @login.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-@current_app.route('/')
-@current_app.route('/index')
+@app.route('/')
+@app.route('/index')
 def index():
     events = Event.query.all()
     return render_template('event_list.html', events=events)
 
-@current_app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -29,12 +29,12 @@ def login():
         return redirect(url_for('index'))
     return render_template('login.html')
 
-@current_app.route('/logout')
+@app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@current_app.route('/signup', methods=['GET', 'POST'])
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
         username = request.form['username']
@@ -54,24 +54,25 @@ def signup():
         return redirect(url_for('login'))
     return render_template('signup.html')
 
-@current_app.route('/event/<int:event_id>')
+@app.route('/event/<int:event_id>')
 def event_detail(event_id):
     event = Event.query.get_or_404(event_id)
     return render_template('event_detail.html', event=event)
 
-@current_app.route('/register_event/<int:event_id>', methods=['POST'])
+@app.route('/register_event/<int:event_id>', methods=['POST'])
 @login_required
 def register_event(event_id):
     flash('You have successfully registered for the event!')
     return redirect(url_for('event_detail', event_id=event_id))
 
-@current_app.route('/admin/dashboard')
+@app.route('/admin/dashboard')
 @login_required
 def admin_dashboard():
     return render_template('admin_dashboard.html')
 
-@current_app.route('/user/dashboard')
+@app.route('/user/dashboard')
 @login_required
 def user_dashboard():
     events = Event.query.all()
     return render_template('user_dashboard.html', events=events)
+
