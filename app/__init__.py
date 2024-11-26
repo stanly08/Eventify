@@ -10,7 +10,7 @@ login = LoginManager()
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object('config.Config')  # Ensure this points to your config file
+    app.config.from_object('config.Config')
 
     # Initialize the extensions with the app
     db.init_app(app)
@@ -18,9 +18,7 @@ def create_app():
     login.init_app(app)
     login.login_view = 'login'
 
-    # Register blueprints and other components here
-    with app.app_context():
-        from app import routes, models  # Import within the app context to avoid circular import issues
+    # Register blueprints or routes
+    from app import routes, models  # Import within the app context to avoid circular import issues
 
     return app
-
