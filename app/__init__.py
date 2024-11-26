@@ -18,8 +18,8 @@ def create_app():
     login.init_app(app)
     login.login_view = 'login'
 
-    # Import routes and models
+    # Register blueprints and other components here
     with app.app_context():
-        from app import routes, models
+        from app import routes, models  # Import within the app context to avoid circular import issues
 
     return app
