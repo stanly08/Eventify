@@ -18,7 +18,10 @@ def create_app():
     login.init_app(app)
     login.login_view = 'login'
 
-    # Register blueprints or routes
-    from app import routes, models  # Import within the app context to avoid circular import issues
+    # Register blueprints
+    from app.routes import main as main_blueprint
+    app.register_blueprint(main_blueprint)
+
+    return app
 
     return app
