@@ -23,3 +23,4 @@ def create_app():
         from app import routes, models  # Import within the app context to avoid circular import issues
 
     return app
+
