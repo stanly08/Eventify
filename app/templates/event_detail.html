@@ -7,13 +7,13 @@
     <p>Location: {{ event.location }}</p>
     <img src="{{ url_for('static', filename='uploads/' + event.photo) }}" class="event-photo" alt="Event Photo">
     <p>{{ event.description }}</p>
-    {% if user.is_authenticated %}
-    <form method="POST" action="{{ url_for('register_event', event_id=event.id) }}">
+    {% if current_user.is_authenticated %}
+    <form method="POST" action="{{ url_for('main.register_event', event_id=event.id) }}"> <!-- Updated -->
         {{ form.hidden_tag() }}
         <button type="submit" class="btn btn-primary">Register</button>
     </form>
     {% else %}
-    <p>Please <a href="{{ url_for('login') }}">login</a> to register for this event.</p>
+    <p>Please <a href="{{ url_for('main.login') }}">login</a> to register for this event.</p> <!-- Updated -->
     {% endif %}
 </div>
 {% endblock %}
