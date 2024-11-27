@@ -46,17 +46,20 @@ def signup():
         email = form.email.data
         password = form.password.data
         if User.query.filter_by(username=username).first() is not None:
-            flash('Username already exists.')
+            flash('Username already exists.', 'danger')
             return redirect(url_for('main.signup'))
         if User.query.filter_by(email=email).first() is not None:
-            flash('Email already exists.')
+            flash('Email already exists.', 'danger')
             return redirect(url_for('main.signup'))
         user = User(username=username, email=email)
         user.set_password(password)
         db.session.add(user)
         db.session.commit()
-        flash('Account created successfully.')
+        flash('Account created successfully.', 'success')
         return redirect(url_for('main.login'))
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash(f"Error in {getattr(form, field).label.text}: {error}", 'danger')
     return render_template('signup.html', form=form)
 
 @main.route('/event/<int:event_id>')
