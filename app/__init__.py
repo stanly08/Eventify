@@ -16,7 +16,7 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
     login.init_app(app)
-    login.login_view = 'login'
+    login.login_view = 'main.login'
 
     # Register blueprints
     from app.routes import main as main_blueprint
@@ -24,4 +24,3 @@ def create_app():
 
     return app
 
-    return app
