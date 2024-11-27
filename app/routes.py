@@ -1,6 +1,8 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request
+import os
+from flask import Blueprint, render_template, redirect, url_for, flash, request, current_app
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename  # Import secure_filename
 from app import db, login
 from app.models import User, Event
 from app.forms import SignupForm, LoginForm, EventForm  # Ensure all forms are imported
@@ -110,4 +112,5 @@ def add_event():
         flash('Event created successfully!', 'success')
         return redirect(url_for('main.event_list'))
     return render_template('add_event.html', form=form)
+
 
