@@ -17,6 +17,31 @@ def index():
     events = Event.query.all()
     return render_template('event_list.html', events=events)
 
+
+@main.route('/add_event', methods=['GET', 'POST'])
+@login_required
+def add_event():
+    form = EventForm()
+    if form.validate_on_submit():
+        filename = None
+        if form.photo.data:
+            # Secure the filename and save the file
+            filename = secure_filename(form.photo.data.filename)
+            file_path = os.path.join(current_app.root_path, 'static/uploads', filename)
+            form.photo.data.save(file_path)
+        event = Event(
+            name=form.name.data,
+            date=form.date.data,
+            location=form.location.data,
+            photo='uploads/' + filename if filename else None
+        )
+        db.session.add(event)
+        db.session.commit()
+        flash('Event created successfully!', 'success')
+        return redirect(url_for('main.index'))
+    return render_template('add_event.html', form=form)
+
+
 @main.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
