@@ -1,19 +1,20 @@
 {% extends "base.html" %}
-{% block title %}Event Detail{% endblock %}
+{% block title %}Event Details{% endblock %}
 {% block content %}
-<div class="container">
-    <h2 class="my-4">{{ event.name }}</h2>
-    <p>Date: {{ event.date }}</p>
-    <p>Location: {{ event.location }}</p>
-    <img src="{{ url_for('static', filename='uploads/' + event.photo) }}" class="event-photo" alt="Event Photo">
-    <p>{{ event.description }}</p>
-    {% if current_user.is_authenticated %}
-    <form method="POST" action="{{ url_for('main.register_event', event_id=event.id) }}"> <!-- Updated -->
-        {{ form.hidden_tag() }}
-        <button type="submit" class="btn btn-primary">Register</button>
-    </form>
-    {% else %}
-    <p>Please <a href="{{ url_for('main.login') }}">login</a> to register for this event.</p> <!-- Updated -->
-    {% endif %}
+<div class="row mt-5">
+    <div class="col-md-8 offset-md-2">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="text-center">{{ event.name }}</h2>
+                <p><strong>Date:</strong> {{ event.date }}</p>
+                <p><strong>Location:</strong> {{ event.location }}</p>
+                {% if event.photo %}
+                    <p><strong>Photo:</strong></p>
+                    <img src="{{ url_for('static', filename=event.photo) }}" class="img-fluid" alt="Event Photo">
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
+
