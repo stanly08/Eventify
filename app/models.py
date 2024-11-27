@@ -24,6 +24,7 @@ class Event(db.Model):
     name = db.Column(db.String(200), nullable=False)
     date = db.Column(db.Date, nullable=False)
     location = db.Column(db.String(200), nullable=False)
-    photo = db.Column(db.String(200)) 
+    photo = db.Column(db.String(200), nullable=True)
+    description = db.Column(db.Text, nullable=False)
 
     
