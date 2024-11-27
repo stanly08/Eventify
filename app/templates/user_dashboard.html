@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 {% block title %}User Dashboard{% endblock %}
 {% block content %}
-<div class="container">
-    <h2 class="my-4">User Dashboard</h2>
-    <p>View and register for events here.</p>
-    <ul>
+<div class="container" style="padding-top: 2rem;">
+    <h2 class="my-4 text-center">User Dashboard</h2>
+    <p class="text-center">View and register for events here.</p>
+    <ul class="list-group">
         {% for event in events %}
-        <li><a href="{{ url_for('event_detail', event_id=event.id) }}">{{ event.name }}</a></li>
+        <li class="list-group-item">
+            <a href="{{ url_for('main.event_detail', event_id=event.id) }}" style="text-decoration: none; color: #007bff;">{{ event.name }}</a>
+        </li>
         {% endfor %}
     </ul>
 </div>
