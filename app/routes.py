@@ -3,7 +3,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import db, login
 from app.models import User, Event
-from app.forms import SignupForm  # Make sure to import your form
+from app.forms import SignupForm, LoginForm  # Make sure to import both forms
 
 main = Blueprint('main', __name__)
 
@@ -21,16 +21,17 @@ def index():
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+    form = LoginForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
         user = User.query.filter_by(username=username).first()
         if user is None or not user.check_password(password):
             flash('Invalid username or password.')
             return redirect(url_for('main.login'))
         login_user(user)
         return redirect(url_for('main.index'))
-    return render_template('login.html')
+    return render_template('login.html', form=form)
 
 @main.route('/logout')
 def logout():
@@ -79,5 +80,6 @@ def admin_dashboard():
 def user_dashboard():
     events = Event.query.all()
     return render_template('user_dashboard.html', events=events)
+
 
 
