@@ -2,10 +2,10 @@ import os
 from flask import Blueprint, render_template, redirect, url_for, flash, request, current_app
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
-from werkzeug.utils import secure_filename  # Import secure_filename
+from werkzeug.utils import secure_filename
 from app import db, login
 from app.models import User, Event
-from app.forms import SignupForm, LoginForm, EventForm  # Ensure all forms are imported
+from app.forms import SignupForm, LoginForm, EventForm
 
 main = Blueprint('main', __name__)
 
@@ -99,7 +99,10 @@ def add_event():
         filename = None
         if form.photo.data:
             filename = secure_filename(form.photo.data.filename)
-            file_path = os.path.join(current_app.root_path, 'static/uploads', filename)
+            upload_path = os.path.join(current_app.root_path, 'static/uploads')
+            if not os.path.exists(upload_path):
+                os.makedirs(upload_path)
+            file_path = os.path.join(upload_path, filename)
             form.photo.data.save(file_path)
         event = Event(
             name=form.name.data,
@@ -112,5 +115,6 @@ def add_event():
         flash('Event created successfully!', 'success')
         return redirect(url_for('main.event_list'))
     return render_template('add_event.html', form=form)
+
 
 
