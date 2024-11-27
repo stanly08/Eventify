@@ -5,8 +5,41 @@
     <h2 class="my-4">Event List</h2>
     <ul>
         {% for event in events %}
-        <li><a href="{{ url_for('event_detail', event_id=event.id) }}">{{ event.name }}</a></li>
+        <li><a href="{{ url_for('main.event_detail', event_id=event.id) }}">{{ event.name }}</a></li>
         {% endfor %}
     </ul>
 </div>
 {% endblock %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        border-radius: 8px;
+    }
+    .my-4 {
+        margin: 1.5rem 0;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    li {
+        margin: 10px 0;
+    }
+    a {
+        text-decoration: none;
+        color: #007bff;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
