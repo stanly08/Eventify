@@ -7,7 +7,7 @@
         <div class="card" style="border: none; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background-color: #fff;">
             <div class="card-body" style="padding: 2rem;">
                 <h2 class="my-4 text-center">Sign Up</h2>
-                <form method="POST" action="{{ url_for('signup') }}">
+                <form method="POST" action="{{ url_for('main.signup') }}">
                     {{ form.hidden_tag() }}
                     <div class="form-group mb-3">
                         {{ form.username.label(class="form-label", style="font-weight: bold; margin-bottom: 0.5rem;") }}
