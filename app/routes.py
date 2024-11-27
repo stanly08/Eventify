@@ -17,6 +17,26 @@ def index():
     events = Event.query.all()
     return render_template('event_list.html', events=events)
 
+from app.forms import SignupForm, LoginForm, EventForm  # Ensure EventForm is imported
+
+@main.route('/add_event', methods=['GET', 'POST'])
+@login_required
+def add_event():
+    form = EventForm()
+    if form.validate_on_submit():
+        event = Event(
+            name=form.name.data,
+            date=form.date.data,
+            location=form.location.data,
+            photo=form.photo.data
+        )
+        db.session.add(event)
+        db.session.commit()
+        flash('Event created successfully!', 'success')
+        return redirect(url_for('main.index'))
+    return render_template('add_event.html', form=form)
+
+
 @main.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
