@@ -1,30 +1,30 @@
 {% extends "base.html" %}
 {% block title %}Admin Dashboard{% endblock %}
 {% block content %}
-<div class="container">
-    <h2 class="my-4">Admin Dashboard</h2>
-    <p>Manage events here.</p>
+<div class="container" style="padding-top: 2rem;">
+    <h2 class="my-4 text-center">Admin Dashboard</h2>
+    <p class="text-center">Manage events here.</p>
     
     <h3 class="my-4">Add New Event</h3>
     <form method="POST" action="{{ url_for('add_event') }}" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
-        <div class="form-group">
-            {{ form.name.label(class="form-label") }}
-            {{ form.name(class="form-control") }}
+        <div class="form-group mb-3">
+            {{ form.name.label(class="form-label", style="font-weight: bold; margin-bottom: 0.5rem;") }}
+            {{ form.name(class="form-control", style="border-radius: 5px; border: 1px solid #ced4da;") }}
         </div>
-        <div class="form-group">
-            {{ form.date.label(class="form-label") }}
-            {{ form.date(class="form-control") }}
+        <div class="form-group mb-3">
+            {{ form.date.label(class="form-label", style="font-weight: bold; margin-bottom: 0.5rem;") }}
+            {{ form.date(class="form-control", style="border-radius: 5px; border: 1px solid #ced4da;") }}
         </div>
-        <div class="form-group">
-            {{ form.location.label(class="form-label") }}
-            {{ form.location(class="form-control") }}
+        <div class="form-group mb-3">
+            {{ form.location.label(class="form-label", style="font-weight: bold; margin-bottom: 0.5rem;") }}
+            {{ form.location(class="form-control", style="border-radius: 5px; border: 1px solid #ced4da;") }}
         </div>
-        <div class="form-group">
-            <label for="photo">Event Photo</label>
-            <input type="file" class="form-control-file" id="photo" name="photo">
+        <div class="form-group mb-3">
+            <label for="photo" style="font-weight: bold; margin-bottom: 0.5rem;">Event Photo</label>
+            <input type="file" class="form-control-file" id="photo" name="photo" style="border-radius: 5px; border: 1px solid #ced4da;">
         </div>
-        <button type="submit" class="btn btn-primary">Add Event</button>
+        <button type="submit" class="btn btn-primary w-100" style="background-color: #007bff; border-color: #007bff; border-radius: 5px; padding: 0.5rem 1.5rem;">Add Event</button>
     </form>
 </div>
 {% endblock %}
