@@ -3,7 +3,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import db, login
 from app.models import User, Event
-from app.forms import SignupForm, LoginForm  # Make sure to import both forms
+from app.forms import SignupForm, LoginForm, EventForm  # Ensure EventForm is imported
 
 main = Blueprint('main', __name__)
 
@@ -17,26 +17,6 @@ def index():
     events = Event.query.all()
     return render_template('event_list.html', events=events)
 
-from app.forms import SignupForm, LoginForm, EventForm  # Ensure EventForm is imported
-
-@main.route('/add_event', methods=['GET', 'POST'])
-@login_required
-def add_event():
-    form = EventForm()
-    if form.validate_on_submit():
-        event = Event(
-            name=form.name.data,
-            date=form.date.data,
-            location=form.location.data,
-            photo=form.photo.data
-        )
-        db.session.add(event)
-        db.session.commit()
-        flash('Event created successfully!', 'success')
-        return redirect(url_for('main.index'))
-    return render_template('add_event.html', form=form)
-
-
 @main.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -47,7 +27,7 @@ def login():
         password = form.password.data
         user = User.query.filter_by(username=username).first()
         if user is None or not user.check_password(password):
-            flash('Invalid username or password.')
+            flash('Invalid username or password.', 'danger')
             return redirect(url_for('main.login'))
         login_user(user)
         return redirect(url_for('main.index'))
@@ -90,7 +70,7 @@ def event_detail(event_id):
 @main.route('/register_event/<int:event_id>', methods=['POST'])
 @login_required
 def register_event(event_id):
-    flash('You have successfully registered for the event!')
+    flash('You have successfully registered for the event!', 'success')
     return redirect(url_for('main.event_detail', event_id=event_id))
 
 @main.route('/admin/dashboard')
@@ -104,5 +84,25 @@ def user_dashboard():
     events = Event.query.all()
     return render_template('user_dashboard.html', events=events)
 
+@main.route('/add_event', methods=['GET', 'POST'])
+@login_required
+def add_event():
+    form = EventForm()
+    if form.validate_on_submit():
+        event = Event(
+            name=form.name.data,
+            date=form.date.data,
+            location=form.location.data,
+            photo=form.photo.data
+        )
+        db.session.add(event)
+        db.session.commit()
+        flash('Event created successfully!', 'success')
+        return redirect(url_for('main.index'))
+    return render_template('add_event.html', form=form)
 
+@main.route('/events')
+def event_list():
+    events = Event.query.all()
+    return render_template('event_list.html', events=events)
 
