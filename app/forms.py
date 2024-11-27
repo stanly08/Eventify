@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, DateField, FileField, SubmitField
+from wtforms import StringField, PasswordField, DateField, FileField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo
 
 class SignupForm(FlaskForm):
@@ -20,5 +20,6 @@ class EventForm(FlaskForm):
     location = StringField('Location', validators=[DataRequired()])
     photo = FileField('Event Photo')
     submit = SubmitField('Add Event')
+
 
 
