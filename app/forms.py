@@ -16,6 +16,8 @@ class SignupForm(FlaskForm):
 
 class EventForm(FlaskForm):
     name = StringField('Event Name', validators=[DataRequired()])
-    date = StringField('Event Date', validators=[DataRequired()])
-    location = StringField('Event Location', validators=[DataRequired()])
+    date = DateField('Event Date', validators=[DataRequired()])
+    location = StringField('Location', validators=[DataRequired()])
+    photo = FileField('Event Photo')
     submit = SubmitField('Add Event')
+
