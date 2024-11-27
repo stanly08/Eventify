@@ -19,7 +19,5 @@ class EventForm(FlaskForm):
     date = DateField('Event Date', validators=[DataRequired()])
     location = StringField('Location', validators=[DataRequired()])
     photo = FileField('Event Photo')
+    description = TextAreaField('Event Description', validators=[DataRequired()])
     submit = SubmitField('Add Event')
-
-
-
