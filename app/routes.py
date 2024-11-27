@@ -3,6 +3,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import db, login
 from app.models import User, Event
+from app.forms import SignupForm  # Make sure to import your form
 
 main = Blueprint('main', __name__)
 
@@ -38,10 +39,11 @@ def logout():
 
 @main.route('/signup', methods=['GET', 'POST'])
 def signup():
-    if request.method == 'POST':
-        username = request.form['username']
-        email = request.form['email']
-        password = request.form['password']
+    form = SignupForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        email = form.email.data
+        password = form.password.data
         if User.query.filter_by(username=username).first() is not None:
             flash('Username already exists.')
             return redirect(url_for('main.signup'))
@@ -54,7 +56,7 @@ def signup():
         db.session.commit()
         flash('Account created successfully.')
         return redirect(url_for('main.login'))
-    return render_template('signup.html')
+    return render_template('signup.html', form=form)
 
 @main.route('/event/<int:event_id>')
 def event_detail(event_id):
@@ -77,4 +79,5 @@ def admin_dashboard():
 def user_dashboard():
     events = Event.query.all()
     return render_template('user_dashboard.html', events=events)
+
 
